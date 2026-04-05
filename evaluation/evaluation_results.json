@@ -1,0 +1,20 @@
+{
+  "num_samples": 50,
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "adapter_path": "output/financial-qa-qlora/final_adapter",
+  "base_rouge": {
+    "rouge1": 0.34328691466071254,
+    "rouge2": 0.13502394523836755,
+    "rougeL": 0.23481019008945936
+  },
+  "finetuned_rouge": {
+    "rouge1": 0.37867750313781295,
+    "rouge2": 0.16854750294432158,
+    "rougeL": 0.2813334083252867
+  },
+  "improvement": {
+    "rouge1": 0.035390588477100415,
+    "rouge2": 0.03352355770595403,
+    "rougeL": 0.046523218235827335
+  }
+}
