@@ -47,8 +47,10 @@ repo/
 │   └── evaluate.py        # Step 3: Base vs Fine-tuned comparison
 ├── data/                  # Generated train.jsonl and eval.jsonl
 ├── evaluation/            # Evaluation results and qualitative samples
+├── demo_video/            # Loom demo video link
 ├── output/                # Model checkpoints and LoRA adapters
 ├── README.md
+├── ARCHITECTURE.md
 └── requirements.txt
 ```
 
@@ -108,6 +110,22 @@ Compares base model vs fine-tuned model on the eval set using:
 | ROUGE-1 | 0.3433 | 0.3787 | +0.0354 |
 | ROUGE-2 | 0.1350 | 0.1685 | +0.0335 |
 | ROUGE-L | 0.2348 | 0.2813 | +0.0465 |
+
+## Failure Cases
+
+While fine-tuning improved overall ROUGE scores, the model exhibits several failure patterns:
+
+1. **Repetitive/Runaway Generation**: On some prompts the fine-tuned model generates excessively long, repetitive lists instead of a concise answer. For example, when asked for "five scientific terms starting with geo", it produced 60+ terms in a runaway loop rather than stopping at five.
+
+2. **Hallucinated Financial Advice**: The fine-tuned model occasionally generates plausible-sounding but incorrect financial guidance. For instance, it incorrectly stated that "the IRS does not allow you to have an S-corp that doesn't generate any income," which is factually wrong — S-corps can exist without revenue.
+
+3. **Off-Domain Questions**: The training data is financial Q&A, so the model's performance degrades on non-financial questions (e.g., general knowledge, coding, creative writing). The base model sometimes handles these better since it retains more general instruction-following ability.
+
+4. **Overly Terse Responses**: The fine-tuned model sometimes produces shorter, less detailed answers compared to the base model, especially on questions requiring multi-step reasoning or nuanced explanations.
+
+5. **Loss of Formatting**: The base model often produces well-structured answers with numbered lists and bold headings. The fine-tuned model tends to output plain-text paragraphs, losing some formatting quality.
+
+These failure modes suggest that a larger training set, longer max sequence length, and techniques like DPO or RLHF could further improve output quality and reduce hallucinations.
 
 ## Tech Stack
 
